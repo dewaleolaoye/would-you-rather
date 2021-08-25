@@ -4,7 +4,6 @@ nav.nav {
     display: flex;
     gap: 2rem;
     align-items: center;
-    justify-content: center;
 
     li {
       &:nth-child(3) {
@@ -12,15 +11,24 @@ nav.nav {
       }
     }
 
-    a {
+    a,
+    li {
       color: #000;
     }
 
+    a {
+      display: block;
+    }
+
+    a:hover {
+      color: #06d6a0;
+    }
+
     .active {
+      background-color: #008967;
       padding: 1rem;
       border-radius: 8px;
-      background: black;
-      color: white;
+      color: #fff;
     }
   }
 }

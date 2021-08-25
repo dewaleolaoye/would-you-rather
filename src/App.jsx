@@ -1,30 +1,32 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.scss';
+import style from './App.module.scss';
 import Navbar from './components/Navbar/Navbar';
 import { Home, LeaderBoard, NewQuestion, Login } from './pages';
 
 function App() {
   return (
-    <div className='App'>
-      <Router>
+    <Router>
+      <div className={style.app}>
         <Navbar />
 
-        <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-          <Route path='/new'>
-            <NewQuestion />
-          </Route>
-          <Route path='/leaderboard'>
-            <LeaderBoard />
-          </Route>
-          <Route path='/login'>
-            <Login />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+        <div className={style.page}>
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='/new'>
+              <NewQuestion />
+            </Route>
+            <Route path='/leaderboard'>
+              <LeaderBoard />
+            </Route>
+            <Route path='/login'>
+              <Login />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 

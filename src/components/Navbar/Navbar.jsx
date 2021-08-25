@@ -24,7 +24,7 @@ const Navbar = () => {
         </li>
 
         <li>
-          <li>Hello, Adewale Olaoye</li>
+          <p>Hello, Adewale Olaoye</p>
         </li>
 
         <li>
@@ -34,7 +34,7 @@ const Navbar = () => {
         </li>
 
         <li>
-          <li>Logout</li>
+          <a href='/'>Logout</a>
         </li>
       </ul>
     </nav>

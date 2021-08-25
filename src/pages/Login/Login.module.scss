@@ -1,0 +1,35 @@
+.login {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #008967;
+  padding: 2rem 1rem;
+  border-radius: 5px;
+
+  p,
+  h1,
+  h2 {
+    text-align: center;
+  }
+
+  .btn {
+    background-color: #00bd8e;
+    color: #fff;
+  }
+  select {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #008967;
+    // background-color: #efefef;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .img {
+    text-align: center;
+    img {
+      width: 180px;
+      height: 180px;
+    }
+  }
+}
