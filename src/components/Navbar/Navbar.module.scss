@@ -1,0 +1,26 @@
+nav.nav {
+  padding: 0.5rem 0;
+  ul {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+
+    li {
+      &:nth-child(3) {
+        margin-right: 3rem;
+      }
+    }
+
+    a {
+      color: #000;
+    }
+
+    .active {
+      padding: 1rem;
+      border-radius: 8px;
+      background: black;
+      color: white;
+    }
+  }
+}
