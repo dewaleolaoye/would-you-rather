@@ -21,7 +21,7 @@ nav.nav {
     }
 
     a:hover {
-      color: #06d6a0;
+      color: #008967;
     }
 
     .active {
@@ -29,6 +29,10 @@ nav.nav {
       padding: 1rem;
       border-radius: 8px;
       color: #fff;
+
+      &:hover {
+        color: #fff;
+      }
     }
   }
 }

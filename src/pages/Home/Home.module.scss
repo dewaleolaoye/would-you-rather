@@ -1,0 +1,24 @@
+.home {
+  border: 1px solid #008967;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+
+  .tab {
+    cursor: pointer;
+
+    &:hover {
+      color: #008967;
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    background-color: #c1c1c1;
+    padding: 1rem;
+    border-radius: 5px 5px 0 0;
+  }
+}

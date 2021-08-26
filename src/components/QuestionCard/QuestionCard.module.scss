@@ -1,0 +1,54 @@
+.card {
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 540px;
+  margin: 2rem auto;
+
+  .title {
+    font-weight: 700;
+    background-color: #c1c1c1;
+    padding: 1rem;
+  }
+
+  .details {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 2fr;
+    padding: 1rem;
+  }
+
+  .avatar {
+    text-align: center;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
+
+  .content {
+    border-left: 1px solid #c1c1c1;
+    padding-left: 1rem;
+
+    .btn {
+      background-color: #fff;
+      color: #008967;
+      border: 1px solid #008967;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      max-width: 285px;
+      width: 100%;
+      display: block;
+      text-align: center;
+      font-weight: 600;
+
+      &:hover {
+        border: 1px solid #06d6a2;
+        background-color: #06d6a2;
+        color: #fff;
+      }
+    }
+  }
+}
