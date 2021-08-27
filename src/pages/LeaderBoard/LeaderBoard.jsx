@@ -1,7 +1,9 @@
+import LeaderBoardCard from '../../components/LeaderBoardCard/LeaderBoardCard';
+
 const LeaderBoard = () => {
   return (
     <div>
-      <h1>LeaderBoard</h1>
+      <LeaderBoardCard />
     </div>
   );
 };
