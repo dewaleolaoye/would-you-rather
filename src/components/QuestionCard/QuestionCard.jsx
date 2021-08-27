@@ -1,13 +1,14 @@
 import style from './QuestionCard.module.scss';
-import faker from 'faker';
-import { Link } from 'react-router-dom';
-import Button from '../Button/Button';
 import { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import Button from '../Button/Button';
+import faker from 'faker';
 
 const QuestionCard = ({ pollCard }) => {
   const id = '123';
   const avatar = faker.image.avatar();
   const [value, setValue] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -16,6 +17,7 @@ const QuestionCard = ({ pollCard }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(value);
+    value ? setLoading(true) : setLoading(false);
   };
 
   return (
@@ -41,35 +43,41 @@ const QuestionCard = ({ pollCard }) => {
                     </Link>
                   </>
                 ) : (
-                  <form className={style.select} onSubmit={handleSubmit}>
-                    <input
-                      type='radio'
-                      id='option1'
-                      name='question'
-                      value='value1'
-                      onChange={handleChange}
-                    />
-                    <label htmlFor='option1'>be a front-end Developer</label>
-                    <br />
-                    <br />
-                    <input
-                      type='radio'
-                      id='option2'
-                      name='question'
-                      value='value2'
-                      onChange={handleChange}
-                    />
-                    <label htmlFor='option2'>be a back-end Developer</label>
+                  <>
+                    <form className={style.select} onSubmit={handleSubmit}>
+                      <input
+                        type='radio'
+                        id='option1'
+                        name='question'
+                        value='value1'
+                        onChange={handleChange}
+                      />
+                      <label htmlFor='option1'>be a front-end Developer</label>
 
-                    <br />
-                    <br />
+                      <br />
+                      <br />
 
-                    <Button
-                      className={style.btn}
-                      name='Submit'
-                      disabled={!value && true}
-                    />
-                  </form>
+                      <input
+                        type='radio'
+                        id='option2'
+                        name='question'
+                        value='value2'
+                        onChange={handleChange}
+                      />
+                      <label htmlFor='option2'>be a back-end Developer</label>
+
+                      <br />
+                      <br />
+
+                      <Button
+                        className={style.btn}
+                        name='Submit'
+                        disabled={!value && true}
+                      />
+                    </form>
+
+                    {loading && <Redirect push to='/pollresult/123' />}
+                  </>
                 )}
               </>
             </div>

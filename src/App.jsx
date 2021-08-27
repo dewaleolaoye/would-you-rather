@@ -1,7 +1,14 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import style from './App.module.scss';
 import Navbar from './components/Navbar/Navbar';
-import { Home, LeaderBoard, NewQuestion, Login, Poll } from './pages';
+import {
+  Home,
+  LeaderBoard,
+  NewQuestion,
+  Login,
+  Poll,
+  PollResult,
+} from './pages';
 
 function App() {
   return (
@@ -15,8 +22,12 @@ function App() {
               <Home></Home>
             </Route>
 
-            <Route exact path='/poll/:id'>
+            <Route path='/poll/:id'>
               <Poll />
+            </Route>
+
+            <Route path='/pollresult/:id'>
+              <PollResult />
             </Route>
 
             <Route path='/new'>
@@ -33,6 +44,10 @@ function App() {
           </Switch>
         </div>
       </div>
+
+      {/* <footer>
+
+      </footer> */}
     </Router>
   );
 }
