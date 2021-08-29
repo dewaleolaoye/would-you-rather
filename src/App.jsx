@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import style from './App.module.scss';
 import Navbar from './components/Navbar/Navbar';
@@ -11,15 +12,16 @@ import {
 } from './pages';
 
 function App() {
+  const authedUser = useSelector((state) => state.users.authedUser);
   return (
     <Router>
       <div className={style.app}>
-        <Navbar />
+        <Navbar authedUser={authedUser} />
 
         <div className={style.page}>
           <Switch>
             <Route exact path='/'>
-              <Home></Home>
+              <Home />
             </Route>
 
             <Route path='/poll/:id'>
@@ -44,10 +46,6 @@ function App() {
           </Switch>
         </div>
       </div>
-
-      {/* <footer>
-
-      </footer> */}
     </Router>
   );
 }

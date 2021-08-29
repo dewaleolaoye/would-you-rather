@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import style from './Navbar.module.scss';
 
-const Navbar = () => {
+const Navbar = ({ authedUser }) => {
+  const checkObject = Object.entries(authedUser).length === 0;
+
   return (
     <nav className={style.nav}>
       <ul>
@@ -23,18 +25,16 @@ const Navbar = () => {
           </NavLink>
         </li>
 
-        <li>
-          <p>Hello, Adewale Olaoye</p>
-        </li>
+        {!checkObject && <p> Hello, {authedUser.name}</p>}
 
         <li>
-          <NavLink to='/login' activeClassName={style.active}>
-            Login
-          </NavLink>
-        </li>
-
-        <li>
-          <a href='/'>Logout</a>
+          {checkObject ? (
+            <NavLink to='/login' activeClassName={style.active}>
+              Login
+            </NavLink>
+          ) : (
+            <a href='/'>Logout</a>
+          )}
         </li>
       </ul>
     </nav>

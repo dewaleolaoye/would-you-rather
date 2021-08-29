@@ -3,17 +3,44 @@ import style from './Login.module.scss';
 import QuestionSVG from '../../assets/question.svg';
 import { Redirect } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { _getUsers } from '../../app/api';
+import { fetchUsers, authUser } from './userSlice';
 
 const Login = () => {
-  const [user, setUser] = useState('');
+  const [allUsers, setAllUsers] = useState({});
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users);
+
+  const [authedUser, setAuthedUser] = useState('');
   const [value, setValue] = useState();
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await _getUsers();
+        setAllUsers(response);
+        dispatch(fetchUsers(response));
+        return response;
+      } catch (error) {
+        console.log(error, 'error');
+      }
+    })();
+  }, [dispatch]);
+
   const handleChange = (e) => {
-    setUser(e.target.value);
+    setAuthedUser(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    setValue(e);
+  const handleSubmit = (userId) => {
+    setValue(userId);
+
+    const filterUser = Object.values(allUsers).filter(({ id }) => {
+      return id === userId;
+    });
+
+    dispatch(authUser(filterUser));
   };
 
   return (
@@ -26,23 +53,32 @@ const Login = () => {
         <img src={QuestionSVG} alt='question' />
       </div>
 
-      <select onChange={handleChange}>
-        <option value='' disabled={user === '' ? true : false}>
-          Choose user
-        </option>
-        <option value='sarah'>Sarah Edo</option>
-        <option value='wale'>Adewale Olaoye</option>
-        <option value='tyler'>Tyler McGinnis</option>
-      </select>
+      {users.loading === 'idle' ? (
+        'Loading users...'
+      ) : (
+        <>
+          <select onChange={handleChange}>
+            <option value='' disabled={authedUser === '' ? true : false}>
+              Choose user
+            </option>
 
-      <Button
-        name='Sign in'
-        className={style.btn}
-        disabled={user === '' ? true : false}
-        onClick={() => handleSubmit(user)}
-      />
+            {Object.values(users.allUsers).map(({ id }) => (
+              <option key={id} value={id}>
+                {id}
+              </option>
+            ))}
+          </select>
 
-      {user === value && <Redirect to='/' />}
+          <Button
+            name='Sign in'
+            className={style.btn}
+            disabled={authedUser === '' ? true : false}
+            onClick={() => handleSubmit(authedUser)}
+          />
+        </>
+      )}
+
+      {authedUser === value && <Redirect to='/' />}
     </div>
   );
 };
