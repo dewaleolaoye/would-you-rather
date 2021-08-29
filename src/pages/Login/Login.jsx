@@ -5,34 +5,26 @@ import { Redirect } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { _getUsers } from '../../app/api';
-import { fetchUsers, authUser } from './userSlice';
+import { authUser, fetchAllUsers } from './userSlice';
 import { useAuth } from '../../components/Auth/useAuth';
 
 const Login = () => {
   const auth = useAuth();
-  const [allUsers, setAllUsers] = useState({});
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-
-  const [authedUser, setAuthedUser] = useState('');
+  const [selectedUser, setSelectedUser] = useState('');
 
   useEffect(() => {
-    _getUsers().then((res) => {
-      setAllUsers(res);
-      return dispatch(fetchUsers(res));
-    });
-
+    dispatch(fetchAllUsers());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // console.log(auth.id, 'AUTH');
   const handleChange = (e) => {
-    setAuthedUser(e.target.value);
+    setSelectedUser(e.target.value);
   };
 
   const handleSubmit = (userId) => {
-    const filterUser = Object.values(allUsers).filter(({ id }) => {
+    const filterUser = Object.values(users.allUsers).filter(({ id }) => {
       return id === userId;
     });
 
@@ -54,9 +46,7 @@ const Login = () => {
       ) : (
         <>
           <select onChange={handleChange}>
-            <option value='' disabled={authedUser === '' ? true : false}>
-              Choose user
-            </option>
+            <option value=''>Choose user</option>
 
             {Object.values(users.allUsers).map(({ id }) => (
               <option key={id} value={id}>
@@ -68,8 +58,8 @@ const Login = () => {
           <Button
             name='Sign in'
             className={style.btn}
-            disabled={authedUser === '' ? true : false}
-            onClick={() => handleSubmit(authedUser)}
+            disabled={selectedUser === '' ? true : false}
+            onClick={() => handleSubmit(selectedUser)}
           />
         </>
       )}

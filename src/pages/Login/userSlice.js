@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { _getUsers } from '../../app/api';
 
 const initialState = {
   allUsers: {},
@@ -6,19 +7,18 @@ const initialState = {
   authedUser: {},
 };
 
+export const fetchAllUsers = createAsyncThunk(
+  'users/fetchAllUsers',
+  async () => {
+    const response = await _getUsers();
+    return response;
+  }
+);
+
 const userSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    fetchUsers: (state, action) => {
-      const users = action.payload;
-
-      Object.values(users).forEach((res) => {
-        state.allUsers[res.id] = res;
-        state.loading = 'fulfilled';
-      });
-    },
-
     authUser: (state, action) => {
       state.authedUser = Object.values(action.payload)[0];
     },
@@ -27,7 +27,19 @@ const userSlice = createSlice({
       state.authedUser = action.payload;
     },
   },
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllUsers.fulfilled, (state, action) => {
+      const users = action.payload;
+
+      Object.values(users).forEach((res) => {
+        state.allUsers[res.id] = res;
+        state.loading = 'fulfilled';
+      });
+    });
+  },
 });
 
-export const { fetchUsers, authUser, logoutUser } = userSlice.actions;
+export const { authUser, logoutUser } = userSlice.actions;
+
 export default userSlice.reducer;
