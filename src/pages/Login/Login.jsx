@@ -7,35 +7,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { _getUsers } from '../../app/api';
 import { fetchUsers, authUser } from './userSlice';
+import { useAuth } from '../../components/Auth/useAuth';
 
 const Login = () => {
+  const auth = useAuth();
   const [allUsers, setAllUsers] = useState({});
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
 
   const [authedUser, setAuthedUser] = useState('');
-  const [value, setValue] = useState();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await _getUsers();
-        setAllUsers(response);
-        dispatch(fetchUsers(response));
-        return response;
-      } catch (error) {
-        console.log(error, 'error');
-      }
-    })();
-  }, [dispatch]);
+    _getUsers().then((res) => {
+      setAllUsers(res);
+      return dispatch(fetchUsers(res));
+    });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // console.log(auth.id, 'AUTH');
   const handleChange = (e) => {
     setAuthedUser(e.target.value);
   };
 
   const handleSubmit = (userId) => {
-    setValue(userId);
-
     const filterUser = Object.values(allUsers).filter(({ id }) => {
       return id === userId;
     });
@@ -78,7 +74,7 @@ const Login = () => {
         </>
       )}
 
-      {authedUser === value && <Redirect to='/' />}
+      {auth.id !== undefined && <Redirect to='/' />}
     </div>
   );
 };

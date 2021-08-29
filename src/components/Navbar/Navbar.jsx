@@ -1,8 +1,17 @@
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../Auth/useAuth';
+import { logoutUser } from '../../pages/Login/userSlice';
 import style from './Navbar.module.scss';
 
-const Navbar = ({ authedUser }) => {
-  const checkObject = Object.entries(authedUser).length === 0;
+const Navbar = () => {
+  const auth = useAuth();
+  const dispatch = useDispatch();
+  console.log(auth, 'AUTH');
+
+  const handleLogout = () => {
+    dispatch(logoutUser({}));
+  };
 
   return (
     <nav className={style.nav}>
@@ -25,15 +34,17 @@ const Navbar = ({ authedUser }) => {
           </NavLink>
         </li>
 
-        {!checkObject && <p> Hello, {authedUser.name}</p>}
+        {auth.id !== undefined && <p> Hello, {auth.name}</p>}
 
         <li>
-          {checkObject ? (
+          {auth.id === undefined ? (
             <NavLink to='/login' activeClassName={style.active}>
               Login
             </NavLink>
           ) : (
-            <a href='/'>Logout</a>
+            <div className={style.logout} onClick={handleLogout}>
+              Logout
+            </div>
           )}
         </li>
       </ul>

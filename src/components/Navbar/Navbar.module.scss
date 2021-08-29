@@ -24,6 +24,15 @@ nav.nav {
       color: #008967;
     }
 
+    .logout {
+      cursor: pointer;
+
+      &:hover {
+        color: #008967;
+        font-weight: 600;
+      }
+    }
+
     .active {
       background-color: #008967;
       padding: 1rem;
