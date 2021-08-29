@@ -1,13 +1,33 @@
-import { useState } from 'react';
-import { Answered, UnAnswered } from '../../components/Question';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '../../components/Auth/useAuth';
+import QuestionCard from '../../components/QuestionCard/QuestionCard';
+import { fetchQuestions } from '../../components/QuestionCard/questionSlice';
 import style from './Home.module.scss';
 
 const Home = () => {
-  const [state, setState] = useState(0);
+  const authedUser = useAuth();
+  const state = useSelector((state) => state.questions);
+  const user = useSelector((state) => state.users.allUsers);
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
 
   const handleClick = (value) => {
-    setState(value);
+    setPage(value);
   };
+
+  useEffect(() => {
+    dispatch(fetchQuestions());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const unAnswered = Object.values(state.questions).filter(
+    ({ id }) => !authedUser.answers[id]
+  );
+
+  const answered = Object.values(state.questions).filter(({ id }) => {
+    return authedUser.answers[id];
+  });
 
   return (
     <div className={style.home}>
@@ -15,7 +35,7 @@ const Home = () => {
         <div
           className={style.tab}
           onClick={() => handleClick(0)}
-          style={{ color: state === 0 && '#008967' }}
+          style={{ color: page === 0 && '#008967' }}
         >
           UnAnswered Questions
         </div>
@@ -23,15 +43,62 @@ const Home = () => {
         <div
           className={style.tab}
           onClick={() => handleClick(1)}
-          style={{ color: state === 1 && '#008967' }}
+          style={{ color: page === 1 && '#008967' }}
         >
           Answered Questions
         </div>
       </div>
       <>
-        {state === 0 && <UnAnswered />}
+        {page === 0 && (
+          <>
+            {state.loading === 'idle'
+              ? 'Loading...'
+              : unAnswered.map(({ id, optionOne, author }) => {
+                  const { avatarURL, name } = user[author];
+                  return (
+                    <QuestionCard
+                      key={id}
+                      avatar={avatarURL}
+                      id={id}
+                      name={name}
+                      optionOne={optionOne.text}
+                    />
+                  );
+                })}
 
-        {state === 1 && <Answered />}
+            {state.loading === 'fulfilled' && (
+              <>
+                {unAnswered.length === 0 && (
+                  <p className={style.p}>
+                    No UnAnswered question(s) at the moment
+                  </p>
+                )}
+              </>
+            )}
+          </>
+        )}
+
+        {page === 1 && (
+          <>
+            {state.loading === 'idle'
+              ? 'Loading...'
+              : answered.map(({ id, optionOne, author }) => {
+                  const { avatarURL, name } = user[author];
+                  return (
+                    <QuestionCard
+                      key={id}
+                      avatar={avatarURL}
+                      id={id}
+                      name={name}
+                      optionOne={optionOne.text}
+                    />
+                  );
+                })}
+            {answered.length === 0 && (
+              <p className={style.p}>Answer some questions</p>
+            )}
+          </>
+        )}
       </>
     </div>
   );

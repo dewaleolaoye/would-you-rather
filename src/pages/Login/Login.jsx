@@ -24,6 +24,7 @@ const Login = () => {
   };
 
   const handleSubmit = (userId) => {
+    localStorage.setItem('token', userId);
     const filterUser = Object.values(users.allUsers).filter(({ id }) => {
       return id === userId;
     });

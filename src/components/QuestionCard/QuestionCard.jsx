@@ -2,11 +2,8 @@ import style from './QuestionCard.module.scss';
 import { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Button from '../Button/Button';
-import faker from 'faker';
 
-const QuestionCard = ({ pollCard }) => {
-  const id = '123';
-  const avatar = faker.image.avatar();
+const QuestionCard = ({ id, pollCard, avatar, name, optionOne }) => {
   const [value, setValue] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -23,12 +20,12 @@ const QuestionCard = ({ pollCard }) => {
   return (
     <>
       <div className={style.card}>
-        <div className={style.title}>Sarah Edo asks:</div>
+        <div className={style.title}>{name} asks:</div>
 
         <div className={style.details}>
           <>
             <div className={style.avatar}>
-              <img src={avatar} alt='question' />
+              <img src={avatar} alt={name} />
             </div>
 
             <div className={style.content}>
@@ -36,7 +33,7 @@ const QuestionCard = ({ pollCard }) => {
                 <h2>Would you rather</h2>
                 {!pollCard ? (
                   <>
-                    <p>...become a superhero...</p>
+                    <p>...{optionOne}...</p>
 
                     <Link to={`/poll/${id}`} className={style.btn}>
                       View poll
@@ -76,7 +73,7 @@ const QuestionCard = ({ pollCard }) => {
                       />
                     </form>
 
-                    {loading && <Redirect push to='/pollresult/123' />}
+                    {loading && <Redirect push to={`/pollresult/123`} />}
                   </>
                 )}
               </>
