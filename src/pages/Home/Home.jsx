@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../components/Auth/useAuth';
 import QuestionCard from '../../components/QuestionCard/QuestionCard';
@@ -16,28 +16,17 @@ const Home = () => {
     setPage(value);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     dispatch(fetchQuestions());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
-  const unAnswered = Object.values(state.questions).filter(
-    ({ id }) => !authedUser.answers[id]
-  );
-
-  console.log(unAnswered, 'unanswered');
+  const unAnswered = Object.values(state.questions).filter(({ id }) => {
+    return !authedUser.answers[id];
+  });
 
   const answered = Object.values(state.questions).filter(({ id }) => {
     return authedUser.answers[id];
   });
-
-  // const a = Object.keys(state.questions).sort((a, b) => {
-  // (a, b) => tweets[b].timeStamp - tweets[a].timeStamp
-
-  //   return state.questions[b].timestamp - state.questions[a].timestamp;
-  // });
-
-  // console.log(a, 'A');
 
   return (
     <div className={style.home}>
@@ -64,6 +53,7 @@ const Home = () => {
             {state.loading === 'idle'
               ? 'Loading...'
               : unAnswered.map(({ id, optionOne, author }) => {
+                  console.log(author, 'AUTHOR');
                   const { avatarURL, name } = user[author];
                   return (
                     <QuestionCard

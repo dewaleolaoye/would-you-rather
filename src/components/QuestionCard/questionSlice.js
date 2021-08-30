@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Redirect } from 'react-router-dom';
-import { _getQuestions, _saveQuestion } from '../../app/api';
+import {
+  _getQuestions,
+  _saveQuestion,
+  _saveQuestionAnswer,
+} from '../../app/api';
 
 const initialState = {
   questions: {},
   loading: 'idle',
-  status: 'pending',
 };
 
 export const fetchQuestions = createAsyncThunk(
@@ -24,20 +26,24 @@ export const saveQuestion = createAsyncThunk(
   }
 );
 
+export const saveQuestionAnswer = createAsyncThunk(
+  'questions/saveAnsweredQuestion',
+  async (answerDetails, _thunk) => {
+    const response = await _saveQuestionAnswer(answerDetails);
+
+    return response;
+  }
+);
+
 const questionSlice = createSlice({
   name: 'questions',
   initialState,
-  reducers: {
-    createQuestion: (state, action) => {},
-  },
+
+  reducers: {},
+
   extraReducers: (builder) => {
     builder.addCase(fetchQuestions.fulfilled, (state, action) => {
       const questions = action.payload;
-
-      // Object.values(questions).map((res) => {
-      //   state.loading = 'fulfilled';
-      //   return (state.questions[res.id] = res);
-      // });
 
       Object.values(questions).map((res) => {
         state.loading = 'fulfilled';
@@ -48,12 +54,12 @@ const questionSlice = createSlice({
       // state.questions[b].timestamp - state.questions[a].timestamp
     });
 
-    builder.addCase(saveQuestion.fulfilled, (state, action) => {
-      const question = action.payload;
+    builder.addCase(saveQuestionAnswer.fulfilled, (state, action) => {
+      const questions = action.payload.questions;
 
-      state.status = 'fulfilled';
-
-      Object.values(state.questions).push(question);
+      Object.values(questions).forEach((res) => {
+        state.questions[res.id] = res;
+      });
     });
   },
 });

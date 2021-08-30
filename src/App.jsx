@@ -23,7 +23,7 @@ function App() {
               <Home />
             </PrivateRoute>
 
-            <PrivateRoute path='/poll/:id'>
+            <PrivateRoute path='/poll/:pollID'>
               <Poll />
             </PrivateRoute>
 

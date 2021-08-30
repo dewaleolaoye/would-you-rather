@@ -1,22 +1,17 @@
 import style from './QuestionCard.module.scss';
-import { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 
-const QuestionCard = ({ id, pollCard, avatar, name, optionOne }) => {
-  const [value, setValue] = useState();
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(value);
-    value ? setLoading(true) : setLoading(false);
-  };
-
+const QuestionCard = ({
+  id,
+  pollCard,
+  avatar,
+  name,
+  optionOne,
+  optionTwo,
+  handleChange,
+  handleSubmit,
+}) => {
   return (
     <>
       <div className={style.card}>
@@ -46,10 +41,10 @@ const QuestionCard = ({ id, pollCard, avatar, name, optionOne }) => {
                         type='radio'
                         id='option1'
                         name='question'
-                        value='value1'
+                        value={'optionOne'}
                         onChange={handleChange}
                       />
-                      <label htmlFor='option1'>be a front-end Developer</label>
+                      <label htmlFor='option1'>{optionOne}</label>
 
                       <br />
                       <br />
@@ -58,10 +53,10 @@ const QuestionCard = ({ id, pollCard, avatar, name, optionOne }) => {
                         type='radio'
                         id='option2'
                         name='question'
-                        value='value2'
+                        value={'optionTwo'}
                         onChange={handleChange}
                       />
-                      <label htmlFor='option2'>be a back-end Developer</label>
+                      <label htmlFor='option2'>{optionTwo}</label>
 
                       <br />
                       <br />
@@ -69,11 +64,9 @@ const QuestionCard = ({ id, pollCard, avatar, name, optionOne }) => {
                       <Button
                         className={style.btn}
                         name='Submit'
-                        disabled={!value && true}
+                        // disabled={!value && true}
                       />
                     </form>
-
-                    {loading && <Redirect push to={`/pollresult/123`} />}
                   </>
                 )}
               </>
