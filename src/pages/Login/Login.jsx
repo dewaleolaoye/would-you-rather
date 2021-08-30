@@ -1,15 +1,13 @@
 import Button from '../../components/Button/Button';
 import style from './Login.module.scss';
 import QuestionSVG from '../../assets/question.svg';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { authUser, fetchAllUsers } from './userSlice';
-import { useAuth } from '../../components/Auth/useAuth';
 
-const Login = () => {
-  const auth = useAuth();
+const Login = ({ history }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const [selectedUser, setSelectedUser] = useState('');
@@ -24,12 +22,14 @@ const Login = () => {
   };
 
   const handleSubmit = (userId) => {
-    localStorage.setItem('token', userId);
+    // localStorage.setItem('token', userId);
     const filterUser = Object.values(users.allUsers).filter(({ id }) => {
       return id === userId;
     });
 
     dispatch(authUser(filterUser));
+
+    history.push('/');
   };
 
   return (
@@ -64,10 +64,8 @@ const Login = () => {
           />
         </>
       )}
-
-      {auth.id !== undefined && <Redirect to='/' />}
     </div>
   );
 };
 
-export default Login;
+export default withRouter(Login);

@@ -25,9 +25,19 @@ const Home = () => {
     ({ id }) => !authedUser.answers[id]
   );
 
+  console.log(unAnswered, 'unanswered');
+
   const answered = Object.values(state.questions).filter(({ id }) => {
     return authedUser.answers[id];
   });
+
+  // const a = Object.keys(state.questions).sort((a, b) => {
+  // (a, b) => tweets[b].timeStamp - tweets[a].timeStamp
+
+  //   return state.questions[b].timestamp - state.questions[a].timestamp;
+  // });
+
+  // console.log(a, 'A');
 
   return (
     <div className={style.home}>
@@ -91,6 +101,7 @@ const Home = () => {
                       id={id}
                       name={name}
                       optionOne={optionOne.text}
+                      pollCard=''
                     />
                   );
                 })}
