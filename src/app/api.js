@@ -21,9 +21,9 @@ let users = {
     },
     questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
   },
-  johndoe: {
-    id: 'johndoe',
-    name: 'John Doe',
+  dewaleolaoye: {
+    id: 'dewaleolaoye',
+    name: 'Adewale Olaoye',
     avatarURL: 'https://avatars.githubusercontent.com/u/44645460?v=4',
     answers: {
       xj352vofupe1dqz9emx13r: 'optionOne',
