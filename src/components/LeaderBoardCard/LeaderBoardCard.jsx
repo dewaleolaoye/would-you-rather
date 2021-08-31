@@ -12,7 +12,6 @@ const LeaderBoardCard = ({
     <div className={style.card}>
       <div className={style.avatar}>
         <img src={avatar} alt={name} />
-        <span>{position}</span>
       </div>
 
       <div className={style.details}>
