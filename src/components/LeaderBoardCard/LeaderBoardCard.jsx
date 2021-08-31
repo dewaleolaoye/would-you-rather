@@ -43,10 +43,25 @@ const LeaderBoardCard = ({
       </div>
 
       <div className={style.badge}>
-        <img
-          src='https://img.icons8.com/doodle/48/000000/trophy--v1.png'
-          alt='vote'
-        />
+        {position === 1 && (
+          <img
+            src='https://img.icons8.com/doodle/48/000000/trophy--v1.png'
+            alt='vote'
+          />
+        )}
+
+        {position === 2 && (
+          <img
+            src='https://img.icons8.com/glyph-neue/50/000000/trophy.png'
+            alt='vote'
+          />
+        )}
+        {position === 3 && (
+          <img
+            src='https://img.icons8.com/ultraviolet/40/000000/trophy--v1.png'
+            alt='vote'
+          />
+        )}
       </div>
     </div>
   );

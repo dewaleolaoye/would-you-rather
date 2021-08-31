@@ -7,7 +7,6 @@ import style from './Navbar.module.scss';
 const Navbar = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
-  // console.log(auth, 'AUTH');
 
   const handleLogout = () => {
     dispatch(logoutUser({}));
