@@ -22,7 +22,6 @@ const Poll = ({ history }) => {
   const handleChange = (e) => {
     setAnswer(e.target.value);
   };
-  console.log(answer, 'answer');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +29,7 @@ const Poll = ({ history }) => {
     dispatch(addAnswerToUser({ authedUser, qid, answer }));
     dispatch(saveQuestionAnswer({ authedUser, qid, answer }));
 
-    history.push('/');
+    history.push(`/pollresult/${qid}`);
   };
 
   return (

@@ -53,7 +53,6 @@ const Home = () => {
             {state.loading === 'idle'
               ? 'Loading...'
               : unAnswered.map(({ id, optionOne, author }) => {
-                  console.log(author, 'AUTHOR');
                   const { avatarURL, name } = user[author];
                   return (
                     <QuestionCard
@@ -62,6 +61,7 @@ const Home = () => {
                       id={id}
                       name={name}
                       optionOne={optionOne.text}
+                      route='poll'
                     />
                   );
                 })}
@@ -91,7 +91,8 @@ const Home = () => {
                       id={id}
                       name={name}
                       optionOne={optionOne.text}
-                      pollCard=''
+                      // pollCard={true}
+                      route='pollresult'
                     />
                   );
                 })}

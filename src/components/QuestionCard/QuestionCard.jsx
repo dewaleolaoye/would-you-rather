@@ -11,6 +11,7 @@ const QuestionCard = ({
   optionTwo,
   handleChange,
   handleSubmit,
+  route,
 }) => {
   return (
     <>
@@ -30,7 +31,7 @@ const QuestionCard = ({
                   <>
                     <p>...{optionOne}...</p>
 
-                    <Link to={`/poll/${id}`} className={style.btn}>
+                    <Link to={`/${route}/${id}`} className={style.btn}>
                       View poll
                     </Link>
                   </>
@@ -61,11 +62,7 @@ const QuestionCard = ({
                       <br />
                       <br />
 
-                      <Button
-                        className={style.btn}
-                        name='Submit'
-                        // disabled={!value && true}
-                      />
+                      <Button className={style.btn} name='Submit' />
                     </form>
                   </>
                 )}

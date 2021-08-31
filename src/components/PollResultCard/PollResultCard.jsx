@@ -1,7 +1,13 @@
 import ProgressBar from '@ramonak/react-progress-bar';
 import style from './PollResultCard.module.scss';
 
-const PollResultCard = ({ vote, percentage }) => {
+const PollResultCard = ({
+  vote,
+  percentage,
+  option,
+  voteCount,
+  totalVotes,
+}) => {
   return (
     <div className={`${style.card} ${vote ? style.active : ''}`}>
       {vote && (
@@ -12,7 +18,7 @@ const PollResultCard = ({ vote, percentage }) => {
           />
         </div>
       )}
-      <h3>Would you rather be a front-end developer?</h3>
+      <h3>{option}</h3>
       <ProgressBar
         className={style.bar}
         completed={percentage}
@@ -21,7 +27,9 @@ const PollResultCard = ({ vote, percentage }) => {
         height='30px'
       />
 
-      <p>1 out of 2 votes</p>
+      <p>
+        {voteCount} out of {totalVotes} votes
+      </p>
     </div>
   );
 };
