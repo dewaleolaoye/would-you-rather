@@ -1,27 +1,32 @@
 import style from './LeaderBoard.module.scss';
-import faker from 'faker';
 
-const LeaderBoardCard = () => {
-  const avatar = faker.image.avatar();
-
+const LeaderBoardCard = ({
+  name,
+  avatar,
+  answeredCount,
+  createdCount,
+  totalScore,
+  position,
+}) => {
   return (
     <div className={style.card}>
       <div className={style.avatar}>
-        <img src={avatar} alt='leaderboard' />
+        <img src={avatar} alt={name} />
+        <span>{position}</span>
       </div>
 
       <div className={style.details}>
-        <h1>Sarah Edo</h1>
+        <h1>{name}</h1>
 
         <div className={style.detailsDescription}>
           <p>Answered question</p>
-          <p>7</p>
+          <p>{answeredCount}</p>
         </div>
         <hr />
 
         <div className={style.detailsDescription}>
           <p>Created question</p>
-          <p>3</p>
+          <p>{createdCount}</p>
         </div>
 
         <hr />
@@ -33,7 +38,7 @@ const LeaderBoardCard = () => {
         </div>
 
         <div className={style.number}>
-          <p>4</p>
+          <p>{totalScore}</p>
         </div>
       </div>
 

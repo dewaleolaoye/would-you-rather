@@ -4,8 +4,9 @@ import QuestionSVG from '../../assets/question.svg';
 import { withRouter } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { authUser, fetchAllUsers } from './userSlice';
+import { fetchQuestions } from '../../components/QuestionCard/questionSlice';
+import { useEffect } from 'react';
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     dispatch(fetchAllUsers());
+    dispatch(fetchQuestions());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

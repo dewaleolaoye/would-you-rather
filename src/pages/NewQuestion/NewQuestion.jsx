@@ -5,6 +5,7 @@ import style from './NewQuestion.module.scss';
 import Button from '../../components/Button/Button';
 import { saveQuestion } from '../../components/QuestionCard/questionSlice';
 import { useAuth } from '../../components/Auth/useAuth';
+import { addQuestionToUser } from '../Login/userSlice';
 
 const NewQuestion = ({ history }) => {
   const dispatch = useDispatch();
@@ -21,11 +22,11 @@ const NewQuestion = ({ history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+
     dispatch(saveQuestion(question));
+    dispatch(addQuestionToUser(question));
 
     history.push('/');
-
-    // state.status = 'pending';
   };
 
   return (

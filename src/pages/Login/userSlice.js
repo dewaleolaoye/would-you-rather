@@ -33,6 +33,12 @@ const userSlice = createSlice({
       state.allUsers[authedUser].answers[qid] = answer;
       state.authedUser.answers[qid] = answer;
     },
+
+    addQuestionToUser: (state, action) => {
+      const { qid, author } = action.payload;
+
+      state.allUsers[author].questions.push(qid);
+    },
   },
 
   extraReducers: (builder) => {
@@ -47,5 +53,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { authUser, logoutUser, addAnswerToUser } = userSlice.actions;
+export const { authUser, logoutUser, addAnswerToUser, addQuestionToUser } =
+  userSlice.actions;
+
 export default userSlice.reducer;

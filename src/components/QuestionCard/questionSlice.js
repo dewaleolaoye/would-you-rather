@@ -49,9 +49,12 @@ const questionSlice = createSlice({
         state.loading = 'fulfilled';
         return (state.questions[res.id] = res);
       });
-      // .sort((a, b) => console.log(state.questions));
-      // (a, b) => tweets[b].timeStamp - tweets[a].timeStamp
-      // state.questions[b].timestamp - state.questions[a].timestamp
+    });
+
+    builder.addCase(saveQuestion.fulfilled, (state, action) => {
+      const question = action.payload;
+
+      state.questions[question.id] = question;
     });
 
     builder.addCase(saveQuestionAnswer.fulfilled, (state, action) => {

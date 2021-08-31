@@ -1,32 +1,30 @@
-import { useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useAuth } from '../../components/Auth/useAuth';
 import QuestionCard from '../../components/QuestionCard/QuestionCard';
-import { fetchQuestions } from '../../components/QuestionCard/questionSlice';
 import style from './Home.module.scss';
 
 const Home = () => {
   const authedUser = useAuth();
   const state = useSelector((state) => state.questions);
   const user = useSelector((state) => state.users.allUsers);
-  const dispatch = useDispatch();
   const [page, setPage] = useState(0);
 
   const handleClick = (value) => {
     setPage(value);
   };
 
-  useMemo(() => {
-    dispatch(fetchQuestions());
-  }, [dispatch]);
+  const unAnswered = Object.values(state.questions)
+    .filter(({ id }) => {
+      return !authedUser.answers[id];
+    })
+    .sort((a, b) => b.timestamp - a.timestamp);
 
-  const unAnswered = Object.values(state.questions).filter(({ id }) => {
-    return !authedUser.answers[id];
-  });
-
-  const answered = Object.values(state.questions).filter(({ id }) => {
-    return authedUser.answers[id];
-  });
+  const answered = Object.values(state.questions)
+    .filter(({ id }) => {
+      return authedUser.answers[id];
+    })
+    .sort((a, b) => b.timestamp - a.timestamp);
 
   return (
     <div className={style.home}>
