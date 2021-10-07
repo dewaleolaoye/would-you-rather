@@ -7,15 +7,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authUser, fetchAllUsers } from './userSlice';
 import { fetchQuestions } from '../../components/QuestionCard/questionSlice';
 import { useEffect } from 'react';
+import { fetchRandomUser } from '../../slices/randmoUser.slice';
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
+
+  const selector = useSelector((state) => state.randomUser);
+
+  console.log(selector, 'RANDOM USER');
+
   const [selectedUser, setSelectedUser] = useState('');
 
   useEffect(() => {
     dispatch(fetchAllUsers());
     dispatch(fetchQuestions());
+    dispatch(fetchRandomUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

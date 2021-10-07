@@ -10,8 +10,12 @@ const initialState = {
 export const fetchAllUsers = createAsyncThunk(
   'users/fetchAllUsers',
   async () => {
-    const response = await _getUsers();
-    return response;
+    try {
+      const response = await _getUsers();
+      return response;
+    } catch (error) {
+      console.log(error, 'ERROR');
+    }
   }
 );
 
